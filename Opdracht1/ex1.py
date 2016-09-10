@@ -41,7 +41,6 @@ def main():
         if pyrSum > maxSum:
             maxSum = pyrSum
         indexList = decrementList(indexList)
-    #    print(indexList)
     print(maxSum)
 
 main() 
