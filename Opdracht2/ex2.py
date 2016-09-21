@@ -16,8 +16,6 @@ def readF():
         lineN +=1
     return data
 
-
-
 # Taken from stackoverflow
 # sort the edges by length
 def sort(array=[12,4,5,6,7,3,1,15]):
@@ -39,12 +37,6 @@ def sort(array=[12,4,5,6,7,3,1,15]):
     else:  # You need to hande the part at the end of the recursion 
         return array
 
-# Add an edge that starts at node 0
-def selectZeroEdge(edges):
-    for i in range(len(edges)):
-        if edges[i][0] == 0:
-            return edges[i]
-
 # Find the next shortest edge that expands the grap
 def nextEdge(edges,validEdges,visited):
     for i in range(len(edges)):
@@ -56,18 +48,13 @@ def nextEdge(edges,validEdges,visited):
 # Find the shortest network based on the inputdata
 def findNetwork(edges, nrNodes, nrEdges):
     validEdges = []
-    visited = []
-    validEdges.append(selectZeroEdge(edges))
-    visited.append(0)
-    visited.append(validEdges[0][1])
+    visited = [0]
     while(len(visited) < nrNodes):
         newEdge, newNode = nextEdge(edges,validEdges,visited)
         validEdges.append(newEdge)
         edges.remove(newEdge)
         visited.append(newNode)
     return validEdges
-
-
 
 def main():
     data = readF()
