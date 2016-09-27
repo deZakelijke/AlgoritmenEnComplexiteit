@@ -18,7 +18,7 @@ def readF():
 
 # Taken from stackoverflow
 # sort the edges by length
-def sort(array=[12,4,5,6,7,3,1,15]):
+def sort(array):
     less = []
     equal = []
     greater = []
