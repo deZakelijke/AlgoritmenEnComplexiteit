@@ -27,9 +27,17 @@ def LCS(answer,test):
             elif cost[i][j-1] > cost[i-1][j]:
                 cost[i][j] = cost[i][j-1]
                 sequence[i][j] = sequence[i][j-1]
+            elif cost[i][j-1] < cost[i-1][j] :
+                cost[i][j] = cost[i-1][j]
+                sequence[i][j] = sequence[i-1][j]
+            elif int(sequence[i][j-1]) <= int(sequence[i-1][j]):
+                cost[i][j] = cost[i][j-1]
+                sequence[i][j] = sequence[i][j-1]
             else:
                 cost[i][j] = cost[i-1][j]
                 sequence[i][j] = sequence[i-1][j]
+
+
     return sequence[-1][-1][1:]
 
 def main():
@@ -42,7 +50,7 @@ def main():
         matches[0].append(len(sequence))
         matches[1].append(sequence)
     for i in range(len(matches[0])):
-        print(matches[0][i],matches[1][i])
+        print(str(matches[0][i])+ " " + matches[1][i])
 
 
 main()
