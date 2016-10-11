@@ -1,0 +1,32 @@
+ection*{Opgave 2}
+De optimale verdeling van studiedagen zou zijn om één dag vak A te leren, nul dagen vak B en twee dagen vak C. In totaal worden er dan vijf punten gehaald bij de tentamens.\\
+
+\section*{Opgave 3}
+a) Een tegenvoorbeeld tegen het greedy algoritme zou zijn:\\
+
+\begin{tikzpicture}
+    \draw (3,0) -- node [above] {b = $4$} (7,0) -- node [below] {c = $3\sqrt{2}$} (10,3) -- node [above] {d=$5\sqrt{10}$} (5,13) -- node [above] {e=$5\sqrt{10}$} (0,3) -- node [below] {a=$3\sqrt{2}$}(3,0) ;
+    \end{tikzpicture}
+    \\
+    Als het algoritme zou beginnen in hoekpunt $ab$, wordt er eerst een lijn getrokken naar hoekpunt $de$, met lengte $\sqrt{173}$. Vervolgens wordt er een lijn getrokken van $de$ naar $bc$, met lengte $\sqrt{173}$.
+    Deze veelhoek ziet er zo uit:\\
+
+    \begin{tikzpicture}
+        \draw (3,0) -- node [above] {b = $4$} (7,0) -- node [below] {c = $3\sqrt{2}$} (10,3) -- node [above] {d=$5\sqrt{10}$} (5,13) -- node [above] {e=$5\sqrt{10}$} (0,3) -- node [below] {a=$3\sqrt{2}$}(3,0) -- node[above]{f=$\sqrt{173}$}(5,13) -- node[above]{g=$\sqrt{173}$}(7,0);
+        \end{tikzpicture}
+        \\
+        Dit is niet de lengte met de kortste deling. Het minimum zou zijn als er een lijn getrokken wordt van $ae$ naar $bc$ en van $ae$ naar $cd$. Dat ziet er as volgt uit:\\
+        \begin{tikzpicture}
+            \draw (3,0) -- node [above] {b = $4$} (7,0) -- node [below] {c = $3\sqrt{2}$} (10,3) -- node [above] {d=$5\sqrt{10}$} (5,13) -- node [above] {e=$5\sqrt{10}$} (0,3) -- node [below] {a=$3\sqrt{2}$}(3,0) -- (7,0) -- node [below] {f=$\sqrt{58}$}(0,3) -- node [above]{g=$10 $}(10,3);
+            \end{tikzpicture}
+
+            De totale lengtes van de lijnstukkken zijn dan:\\
+            1) $(a+e+f)+(b+f+g)+(c+g+d) = 2(5\sqrt{10} + 3\sqrt{2} + \sqrt{173}) + 2\sqrt{173} + 4 \approx 96.72$\\
+            2) $(a+b+f)+(e+d+g)+(c+f+g) = 24 + 6\sqrt{2} + 2\sqrt{58} + 10\sqrt{10} \approx 79.34$\\
+
+            Het greedy algoritme is dus niet het optimale algoritme.\\
+
+            b) Het verbinden van de eerste twee hoekpunten kan een keuze zijn die er voor zorgt dat de veelhoek al niet meer bij de optimale oplossing kan komen (bijvoorbeeld $ab$ naar $de$ in het vorige voorbeeld). Hierdoor zou dit alleen op een optimale oplossing uit komen als met backtracking elke oplossing berekend wordt, anders is er geen garantie dat de optimale oplossing gevonden is.\\
+
+            c) We observeren dat een veelhoek met $n$ hoeken optimaal verdeeld kan worden in driehoeken door te kijken naar de optimale verdeling van alle veelhoeken met $n-1$ hoeken plus één driehoek die er weer een veelhoek van $n$ van maakt.
+            Als we dit gebruiken voor een dynamisch algoritme, bepalen we de optimale verdeling in driehoeken van een veelhoek met $i+1$ hoeken door naar de kosten te kijken van alle veelhoeken in deze figuur met $i$ hoeken. Dan is de optimale deling degene waarvoor de som van de kosten van de deling van de veelhoek met $i$ hoeken plus de ene extra driehoek die het totaal een $i+1$-hoek maakt minimaal is. Als we hierbij bij de simpeste vorm beginnen, een driehoek, houden we in een tabel bij wat de kosten zijn van elke mogelijke driehoek. Daarna kijken we naar de kosten van elke $3+1$-hoek, die we berekenen met behulp van de al berekende kosten van de driehoeken. Bij elke stap kijken we of de driehoek die we toevoegen om een $i+1$-hoek te maken in combinatie met een eerder berekende veelhoek te minimaliseren is. Dit herhalen we tot we de minimale kosten hebben van een n-hoek.\\
