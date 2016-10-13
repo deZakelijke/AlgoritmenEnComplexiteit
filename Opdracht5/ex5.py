@@ -2,6 +2,7 @@
 
 import sys
 import math
+import time
 
 def readfile():
     data = []
@@ -32,7 +33,7 @@ def extendedEuclideanAlgorithm(publicKey, totient):
     s_old = 1
     t = 1
     t_old = 0
-    while r != 0:
+    while r:
         quotient = r_old // r
         r_old, r = r, r_old - quotient * r
         s_old, s = s, s_old - quotient * s
@@ -46,6 +47,19 @@ def normalize(number, normalizer):
         number += normalizer
     return number
 
+def modPower(number, exponent, mod):
+    if exponent == 1:
+        resultNumber % mod
+    elif exponent == 2:
+        resultNumber = number ** 2 % mod
+    elif not exponent%2:
+        resultNumber = modPower(number, exponent/2, mod)
+        resultNumber = resultNumber * resultNumber % mod
+    else:
+        resultNumber = modPower(number, exponent-1, mod)
+        resultNumber = resultNumber * number % mod 
+    return resultNumber
+
 
 def decode(message):
     primeProduct = message[0]
@@ -55,8 +69,7 @@ def decode(message):
     totient = (primeFactor1 - 1)*(primeFactor2 - 1)
     privateKey = extendedEuclideanAlgorithm(publicKey, totient)
     privateKey = normalize(privateKey, totient)
-    print(privateKey)
-    decodedMessage = (encryptedMessage ** privateKey) % primeProduct
+    decodedMessage = modPower(encryptedMessage, privateKey, primeProduct)
     return decodedMessage
 
 def main():
