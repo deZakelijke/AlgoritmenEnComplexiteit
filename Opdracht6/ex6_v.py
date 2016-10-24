@@ -10,18 +10,33 @@ def readfile():
     for i in range(int(firstLine[0])):
         nextLine = sys.stdin.readline()
         nextLine = nextLine.split()
-        print(nextLine)
-        values =values + {nextLine[0]: int(nextLine[1])}
-    print(values)
-    for i in range(int(fisrLine[1])):
+        values.update({nextLine[0]: int(nextLine[1])})
+    for i in range(int(firstLine[1])):
         nextLine = sys.stdin.readline()
         nextLine = nextLine.split()
-        formula = formula + {}
+        clause = dict()
         for j in range(len(nextLine)):
             if nextLine[j][0] == "~":
-                print("yo")
+                clause.update({nextLine[j][1:]: 0})
+            else:
+                clause.update({nextLine[j]: 1})
+        formula.update({i: clause})
+    return values, formula
 
+def checkClause(clause, values):
+    valid = False
+    for literal in clause:
+        if values[literal] == clause[literal]:
+            valid = True
+    return valid
 
-readfile()
-
+def main():
+    values, formula = readfile()
+    for i in range(len(formula)):
+        clauseValid = checkClause(formula[i], values)
+        if not clauseValid:
+            print("Vervult formule niet")
+            return
+    print("Vervult formule")
     
+main()
