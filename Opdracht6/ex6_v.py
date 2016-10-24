@@ -4,7 +4,7 @@ import sys
 
 def readfile():
     values = dict()
-    formula = dict()
+    formula = []
     firstLine = sys.stdin.readline()
     firstLine = firstLine.split()
     for i in range(int(firstLine[0])):
@@ -20,7 +20,7 @@ def readfile():
                 clause.update({nextLine[j][1:]: 0})
             else:
                 clause.update({nextLine[j]: 1})
-        formula.update({i: clause})
+        formula.append(clause)
     return values, formula
 
 def checkClause(clause, values):
