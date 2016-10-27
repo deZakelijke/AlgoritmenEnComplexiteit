@@ -24,8 +24,8 @@ def readfile():
             else:
                 #clause.update({splitLine[j]: 1})
                 clause[splitLine[j]] = 1
-        sortedClause = OrderedDict(sorted(clause.items(), key=lambda x: x[0]))
-        formula.append(sortedClause)
+        # sortedClause = OrderedDict(sorted(clause.items(), key=lambda x: x[0]))
+        formula.append(clause)
     return [int(firstLine[0]), int(firstLine[1])], values, formula, outputSave
 
 # Voor in het archief
@@ -99,18 +99,15 @@ def assignRecursive(formula, values):
     noneIndex = valuesNone(values)
     if not noneIndex:
         return True
-    
     tempValues = values
     tempValues[noneIndex] = 1
     if assignRecursive(formula, tempValues):
         values[noneIndex] = 1
-        # print(values)
         return True
     else:
         tempValues[noneIndex] = 0
         if assignRecursive(formula, tempValues):
             values[noneIndex] = 0
-            # print(values)
             return True
         else:
             values[noneIndex] = None
@@ -119,26 +116,14 @@ def assignRecursive(formula, values):
 
 def main():
     header, values, formula, output = readfile()
-
-    # Resolutie laten we even liggen
-    # Kutkloterij
-    '''
-    update = formula
-    while update:
-        newClause = resolutionStep(update)
-        if newClause:
-            update.append(newClause)
-            update.sort(key=len)
-    '''
-
     assignRecursive(formula, values)
+    if None in values.values():
+        print("Niet Vervulbaar")
+        exit()
 
     print(header[0], header[1])
     for literal in values:
-        if values[literal] == None:
-            print(literal, 1)
-        else:
-            print(literal, values[literal])
+        print(literal, values[literal])
     for clause in output:
         print(clause)
 main()

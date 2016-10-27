@@ -6,6 +6,9 @@ def readfile():
     values = dict()
     formula = []
     firstLine = sys.stdin.readline()
+    if firstLine == "Niet Vervulbaar\n":
+        print("Niet vervulbaar")
+        exit()
     firstLine = firstLine.split()
     for i in range(int(firstLine[0])):
         nextLine = sys.stdin.readline()
